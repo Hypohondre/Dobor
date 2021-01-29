@@ -28,7 +28,6 @@ public class UsersDaoImpl implements UsersDao {
 
     @Override
     public Optional<User> find(Long id) {
-        User user = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_ID)) {
             preparedStatement.setLong(1, id);
             ResultSet set = preparedStatement.executeQuery();

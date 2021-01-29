@@ -9,8 +9,7 @@ public class Post {
     private Long creator_id;
     private Long category_id;
 
-    public Post(Long id,String text,String img, Long creator_id, Long category_id) {
-            this.id = id;
+    public Post(String text,String img, Long creator_id, Long category_id) {
             this.text = text;
             this.img = img;
             this.creator_id = creator_id;
