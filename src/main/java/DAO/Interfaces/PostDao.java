@@ -18,7 +18,5 @@ public interface PostDao extends CrudDao<Post>{
     @Override
     void delete(Long id);
 
-    List<Post> findAllByCreator(Long id);
-
-    List<Post> findAllByCategory(Long id);
+    List<Post> findAll(Long id, String sql);
 }

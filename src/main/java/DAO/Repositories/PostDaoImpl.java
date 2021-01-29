@@ -110,32 +110,15 @@ public class PostDaoImpl implements PostDao {
     }
 
     //language=SQL
-    private final String FIND_POST_BY_CREATOR = "SELECT * FROM post WHERE creator_id = ?";
-
-    @Override
-    public List<Post> findAllByCreator(Long id) {
-        List<Post> posts = new ArrayList<>();
-        try(PreparedStatement preparedStatement = connection.prepareStatement(FIND_POST_BY_CREATOR)) {
-            preparedStatement.setLong(1, id);
-
-            ResultSet set = preparedStatement.executeQuery();
-            while (set.next()) {
-                Post post = postRowMapper.mapRow(set);
-                posts.add(post);
-            }
-        } catch (SQLException e) {
-            throw new IllegalStateException(e);
-        }
-        return posts;
-    }
+    public static final String FIND_POST_BY_CREATOR = "SELECT * FROM post WHERE creator_id = ?";
 
     //language=SQL
-    private final String FIND_POST_BY_CATEGORY = "SELECT * FROM post WHERE category_id = ?";
+    public static final String FIND_POST_BY_CATEGORY = "SELECT * FROM post WHERE category_id = ?";
 
     @Override
-    public List<Post> findAllByCategory(Long id) {
+    public List<Post> findAll(Long id, String sql) {
         List<Post> posts = new ArrayList<>();
-        try(PreparedStatement preparedStatement = connection.prepareStatement(FIND_POST_BY_CATEGORY)) {
+        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
 
             ResultSet set = preparedStatement.executeQuery();
