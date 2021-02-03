@@ -3,6 +3,8 @@ package servlets;
 import DAO.Interfaces.UsersDao;
 import DAO.Repositories.UsersDaoImpl;
 import models.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import services.CookieService;
 import services.Helper;
 
@@ -20,6 +22,7 @@ public class LoginServlet extends HttpServlet {
     private Helper helper;
     private UsersDao bd;
     private CookieService cs;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,18 +37,30 @@ public class LoginServlet extends HttpServlet {
         resp.setContentType("text/html");
         resp.setCharacterEncoding("UTF-8");
 
-        Optional<Long> id = bd.login(username, password);
-        if(id.isPresent()){
-            HttpSession session = req.getSession();
-            session.setAttribute("user_id", id.get());
-            if (check != null) {
-                Cookie cookie = new Cookie("user_id", id.get().toString());
-                addCookie(cookie, resp);
+        Optional<User> user = bd.login(username);
+
+        if(user.isPresent()){
+            User userCandidate = user.get();
+            String encPassword = userCandidate.getPassword();
+            Long id = userCandidate.getId();
+
+            if (passwordEncoder.matches(password, encPassword)) {
+                HttpSession session = req.getSession();
+                session.setAttribute("user_id", id);
+                if (check != null) {
+                    Cookie cookie = new Cookie("user_id", id.toString());
+                    addCookie(cookie, resp);
+                }
+                resp.sendRedirect("/profile");
+            } else {
+                Map<String, Object> root = new HashMap<>();
+                root.put("message","incorrect password");
+                helper.render(req, resp, "login.ftl", root);
             }
-            resp.sendRedirect("/profile");
+
         }else{
             Map<String, Object> root = new HashMap<>();
-            root.put("message","incorrect password or username");
+            root.put("message","incorrect login");
             helper.render(req, resp, "login.ftl", root);
         }
     }
@@ -60,5 +75,6 @@ public class LoginServlet extends HttpServlet {
         helper = new Helper();
         bd = new UsersDaoImpl();
         cs = new CookieService();
+        passwordEncoder = new BCryptPasswordEncoder();
     }
 }

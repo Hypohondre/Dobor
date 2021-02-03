@@ -43,27 +43,23 @@ public class UsersDaoImpl implements UsersDao {
     }
 
     //language=SQL
-    private final String LOGIN_USER = "SELECT * FROM users WHERE email = ? AND password = ?";
+    private final String LOGIN_USER = "SELECT * FROM users WHERE email = ?";
 
     @Override
-    public Optional<Long> login(String mail, String password) {
-        Long id;
+    public Optional<User> login(String mail) {
         try(PreparedStatement preparedStatement = connection.prepareStatement(LOGIN_USER)) {
             preparedStatement.setString(1, mail);
-            preparedStatement.setString(2, password);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                id = resultSet.getLong("id");
+                return Optional.ofNullable(userRowMapper.mapRow(resultSet));
             } else {
-                id = null;
+                throw new SQLException();
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
-        return Optional.ofNullable(id);
     }
 
     //language=SQL

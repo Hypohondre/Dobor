@@ -2,6 +2,8 @@ package servlets;
 
 import DAO.Repositories.UsersDaoImpl;
 import models.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import services.Helper;
 import services.RegistrationHandler;
 
@@ -21,6 +23,7 @@ public class RegistrationServlet extends HttpServlet {
     private Helper helper;
     private RegistrationHandler regService;
     private UsersDaoImpl udi;
+    private PasswordEncoder passwordEncoder;
     Map<String, Object> root;
 
     @Override
@@ -40,7 +43,8 @@ public class RegistrationServlet extends HttpServlet {
         root = new HashMap<>();
 
         if (errors.isEmpty()) {
-            User user = new User(username, password, mail, Date.valueOf(date));
+            String encPassword = passwordEncoder.encode(password);
+            User user = new User(username, encPassword, mail, Date.valueOf(date));
             udi.save(user);
             resp.sendRedirect("/login");
         } else {
@@ -55,5 +59,6 @@ public class RegistrationServlet extends HttpServlet {
         helper = new Helper();
         regService = new RegistrationHandler();
         udi = new UsersDaoImpl();
+        passwordEncoder = new BCryptPasswordEncoder();
     }
 }

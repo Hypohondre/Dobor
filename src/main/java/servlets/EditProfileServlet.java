@@ -5,6 +5,7 @@ import models.User;
 import services.Helper;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,13 +14,15 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.HashMap;
 
+
+@WebServlet("/edit-profile")
 public class EditProfileServlet extends HttpServlet {
     private Helper helper;
     private UsersDaoImpl bd;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        helper.render(req, resp, "edit-profile", new HashMap<>());
+        helper.render(req, resp, "edit-profile.ftl", new HashMap<>());
     }
 
     @Override

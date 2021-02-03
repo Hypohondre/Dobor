@@ -1,7 +1,12 @@
+DAO\Interfaces\CategoryDao.class
 DAO\Interfaces\RowMapper.class
+servlets\ListOfPostsServlet.class
 services\CookieService.class
 servlets\LoginServlet.class
+DAO\Interfaces\PostDao.class
+DAO\Repositories\PostDaoImpl.class
 models\User.class
+models\Category.class
 DAO\Interfaces\CrudDao.class
 filters\CookieFilter.class
 filters\SessionFilter.class
@@ -11,6 +16,9 @@ servlets\RegistrationServlet.class
 servlets\ProfileServlet.class
 DAO\Repositories\UsersDaoImpl.class
 DAO\Repositories\UsersRepositoryImpl.class
+models\Post.class
 services\Helper.class
+servlets\EditProfileServlet.class
 DAO\Interfaces\UsersDao.class
 listeners\ServletContextListener.class
+DAO\Repositories\CategoryDaoImpl.class

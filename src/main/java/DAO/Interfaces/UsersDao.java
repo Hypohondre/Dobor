@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UsersDao extends CrudDao<User> {
-    Optional<Long> login(String name, String password);
+    Optional<User> login(String name);
 }
