@@ -17,7 +17,7 @@ public class PostDaoImpl implements PostDao {
     public Connection connection;
     private RowMapper<Post> postRowMapper = row -> new Post(
             row.getString("text"),
-            row.getString("img"),
+            row.getString("name"),
             row.getLong("creator_id"),
             row.getLong("category_id")
     );
@@ -47,15 +47,16 @@ public class PostDaoImpl implements PostDao {
     }
 
     //language=SQL
-    private final String SAVE = "INSERT INTO post(id, text, img, creator_id, category_id) values (default, ?,?,?,?)";
+    private final String SAVE = "INSERT INTO post(id,name, text, img, creator_id, category_id) values (default,?,?,?,?,?)";
 
     @Override
     public void save(Post model) {
         try(PreparedStatement preparedStatement = connection.prepareStatement(SAVE)) {
             preparedStatement.setString(1, model.getText());
-            preparedStatement.setString(2, model.getImg());
-            preparedStatement.setLong(3, model.getCreator_id());
-            preparedStatement.setLong(4, model.getCategory_id());
+            preparedStatement.setString(2, model.getName());
+            preparedStatement.setString(3, model.getImg());
+            preparedStatement.setLong(4, model.getCreator_id());
+            preparedStatement.setLong(5, model.getCategory_id());
 
             if (preparedStatement.executeUpdate() == 0) {
                 throw new SQLException();

@@ -116,6 +116,45 @@ public class CategoryDaoImpl implements CategoryDao {
                 Category category = categoryRowMapper.mapRow(set);
                 categories.add(category);
             }
+
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+        return categories;
+    }
+
+    public Optional<Category> findByName(String name) {
+        List<Category> categories = new ArrayList<>();
+        try(PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL)) {
+            preparedStatement.setString(1, name);
+
+            ResultSet set = preparedStatement.executeQuery();
+
+            if (set.next()) {
+                Category category = new Category(set.getString("name"));
+                category.setId(set.getLong(1));
+                return Optional.ofNullable(category);
+            } else {
+                throw new SQLException();
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    //language=SQL
+    private final String SELECT_ALL = "SELECT * FROM category";
+
+    @Override
+    public List<Category> selectAll() {
+        List<Category> categories = new ArrayList<>();
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
+
+            ResultSet set = preparedStatement.executeQuery();
+            while (set.next()) {
+                Category category = categoryRowMapper.mapRow(set);
+                categories.add(category);
+            }
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }

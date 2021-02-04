@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>profile</title>
+    <title>edit-profile</title>
 </head>
     <body>
         <form method="post" action="/edit-profile">

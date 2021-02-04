@@ -53,7 +53,15 @@ public class UsersDaoImpl implements UsersDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                return Optional.ofNullable(userRowMapper.mapRow(resultSet));
+                User user = new User(
+                        resultSet.getString("name"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        resultSet.getDate("birthdate")
+                );
+
+                user.setId(resultSet.getLong(1));
+                return Optional.ofNullable(user);
             } else {
                 throw new SQLException();
             }

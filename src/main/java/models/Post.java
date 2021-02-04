@@ -5,13 +5,17 @@ import java.util.Objects;
 public class Post {
     private Long id;
     private String text;
+    private String name;
     private String img;
     private Long creator_id;
     private Long category_id;
+    private String category;
+    private String creator;
 
-    public Post(String text,String img, Long creator_id, Long category_id) {
+    public Post(String text,String name, Long creator_id, Long category_id) {
             this.text = text;
-            this.img = img;
+            this.name = name;
+            this.img = null;
             this.creator_id = creator_id;
             this.category_id = category_id;
     }
@@ -67,5 +71,29 @@ public class Post {
 
     public void setCategory_id(Long category_id) {
         this.category_id = category_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getCreator() {
+        return creator;
     }
 }

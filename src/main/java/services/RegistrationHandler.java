@@ -39,7 +39,7 @@ public class RegistrationHandler {
 
     private void handleEmail(String email) {
         UsersDaoImpl bd = new UsersDaoImpl();
-        if(bd.findByEmail(email) != null) {
+        if(bd.findByEmail(email) == null) {
             errors.add("This email exist");
             return;
         }

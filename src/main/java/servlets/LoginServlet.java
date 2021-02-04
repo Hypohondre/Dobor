@@ -44,7 +44,9 @@ public class LoginServlet extends HttpServlet {
             String encPassword = userCandidate.getPassword();
             Long id = userCandidate.getId();
 
-            if (passwordEncoder.matches(password, encPassword)) {
+            //passwordEncoder.matches(password, encPassword)
+
+            if (password.equals(encPassword)) {
                 HttpSession session = req.getSession();
                 session.setAttribute("user_id", id);
                 if (check != null) {
