@@ -24,37 +24,17 @@ public class ListOfPostsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String,Object> root = new HashMap<>();
-//        List<String> names = new ArrayList<>();
-//        List<String> texts = new ArrayList<>();
-//        List<String> categories = new ArrayList<>();
-//        List<String> creators = new ArrayList<>();
-        List<Post> posts = new ArrayList<>();
+        List<Post> posts = postDao.selectAll();
 
-        for (long i=1; i<=7; i++) {
-            Optional<Post> candidate = postDao.find(i);
-
-            if (candidate.isPresent()) {
-                Post post = candidate.get();
+        for(Post post : posts) {
 
                 String creator = usersDao.find(post.getCreator_id()).get().getUsername();
                 String category = categoryDao.find(post.getCategory_id()).get().getName();
 
                 post.setCategory(category);
                 post.setCreator(creator);
-
-                posts.add(post);
-
-//                names.add(post.getName());
-//                texts.add(post.getText());
-//                categories.add(category);
-//                creators.add(creator);
-            }
         }
 
-//        root.put("names", names);
-//        root.put("texts", texts);
-//        root.put("categories", categories);
-//        root.put("creators", creators);
         root.put("posts", posts);
 
         helper.render(req,resp,"list.ftl",root);

@@ -47,6 +47,25 @@ public class PostDaoImpl implements PostDao {
     }
 
     //language=SQL
+    private final String SELECT_ALL = "SELECT * FROM post";
+
+    public List<Post> selectAll() {
+        List<Post> posts = new ArrayList<>();
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
+
+            ResultSet set = preparedStatement.executeQuery();
+            while (set.next()) {
+                Post post = postRowMapper.mapRow(set);
+                post.setId(set.getLong(1));
+                posts.add(post);
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+        return posts;
+    }
+
+    //language=SQL
     private final String SAVE = "INSERT INTO post(id,name, text, img, creator_id, category_id) values (default,?,?,?,?,?)";
 
     @Override
