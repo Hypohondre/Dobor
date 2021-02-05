@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>profile</title>
+    <title>list of posts</title>
     <style>
         .post {
             height: 300px;
@@ -16,10 +16,7 @@
     </style>
 </head>
     <body>
-<#--    <#list names as name>-->
-<#--    <#list texts as text>-->
-<#--    <#list categories as category>-->
-<#--    <#list creators as creator>-->
+
 <#list posts as post>
         <div class="post">
             ${post.name}
@@ -29,11 +26,10 @@
             ${post.category}
             <hr>
             ${post.creator}
+            <hr>
+            <a href="/post?id=${post.id}">full</a>
         </div>
 </#list>
-<#--    </#list>-->
-<#--    </#list>-->
-<#--    </#list>-->
-<#--    </#list>-->
+
     </body>
 </html>

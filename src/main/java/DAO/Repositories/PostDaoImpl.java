@@ -92,13 +92,13 @@ public class PostDaoImpl implements PostDao {
     }
 
     //language=SQL
-    private final String UPDATE = "UPDATE post SET text=?, img=?, category_id=? WHERE id=?";
+    private final String UPDATE = "UPDATE post SET name=?, text=?, category_id=? WHERE id=?";
 
     @Override
     public void update(Post model) {
         try(PreparedStatement preparedStatement = connection.prepareStatement(UPDATE)) {
-            preparedStatement.setString(1,model.getText());
-            preparedStatement.setString(2,model.getImg());
+            preparedStatement.setString(1,model.getName());
+            preparedStatement.setString(2,model.getText());
             preparedStatement.setLong(3,model.getCategory_id());
             preparedStatement.setLong(4,model.getId());
 

@@ -8,4 +8,11 @@
         <name>filter1</name>
         <name>filter2</name>
     </absolute-ordering>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+        <url-pattern>*.html</url-pattern>
+        <url-pattern>*.png</url-pattern>
+        <url-pattern>*.jpg</url-pattern>
+    </servlet-mapping>
 </web-app>

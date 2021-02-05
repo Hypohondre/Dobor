@@ -35,6 +35,7 @@ public class UsersDaoImpl implements UsersDao {
             if (set.next()) {
                 User user = userRowMapper.mapRow(set);
                 user.setId(set.getLong(1));
+                user.setPhoto(set.getString("photo"));
                 return Optional.ofNullable(user);
             } else {
                 throw new SQLException();

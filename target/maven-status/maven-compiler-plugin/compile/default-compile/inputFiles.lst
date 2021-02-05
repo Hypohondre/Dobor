@@ -1,5 +1,6 @@
 C:\Users\Рустем\IdeaProjects\Semestrovka-yes\src\main\java\DAO\Interfaces\UsersDao.java
 C:\Users\Рустем\IdeaProjects\Semestrovka-yes\src\main\java\servlets\CreatePostServlet.java
+C:\Users\Рустем\IdeaProjects\Semestrovka-yes\src\main\java\servlets\EditPostServlet.java
 C:\Users\Рустем\IdeaProjects\Semestrovka-yes\src\main\java\DAO\Interfaces\RowMapper.java
 C:\Users\Рустем\IdeaProjects\Semestrovka-yes\src\main\java\DAO\Interfaces\CategoryDao.java
 C:\Users\Рустем\IdeaProjects\Semestrovka-yes\src\main\java\DAO\Repositories\UsersDaoImpl.java
@@ -12,6 +13,7 @@ C:\Users\Рустем\IdeaProjects\Semestrovka-yes\src\main\java\models\Post.jav
 C:\Users\Рустем\IdeaProjects\Semestrovka-yes\src\main\java\DAO\Repositories\CategoryDaoImpl.java
 C:\Users\Рустем\IdeaProjects\Semestrovka-yes\src\main\java\services\CookieService.java
 C:\Users\Рустем\IdeaProjects\Semestrovka-yes\src\main\java\services\RegistrationHandler.java
+C:\Users\Рустем\IdeaProjects\Semestrovka-yes\src\main\java\servlets\PostServlet.java
 C:\Users\Рустем\IdeaProjects\Semestrovka-yes\src\main\java\DAO\Interfaces\CrudDao.java
 C:\Users\Рустем\IdeaProjects\Semestrovka-yes\src\main\java\services\Helper.java
 C:\Users\Рустем\IdeaProjects\Semestrovka-yes\src\main\java\listeners\ServletContextListener.java

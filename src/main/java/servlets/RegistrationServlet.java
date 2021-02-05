@@ -44,7 +44,7 @@ public class RegistrationServlet extends HttpServlet {
 
         if (errors.isEmpty()) {
             String encPassword = passwordEncoder.encode(password);
-            User user = new User(username, encPassword, mail, Date.valueOf(date));
+            User user = new User(username, password, mail, Date.valueOf(date));
             udi.save(user);
             resp.sendRedirect("/login");
         } else {

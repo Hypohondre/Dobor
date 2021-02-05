@@ -24,6 +24,9 @@ public class ProfileServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html;charset=Windows-1251");
+        req.setCharacterEncoding("Cp1251");
+
         HttpSession session = req.getSession();
         Long id = (Long) session.getAttribute("user_id");
         sendUser(id);
@@ -39,9 +42,7 @@ public class ProfileServlet extends HttpServlet {
         Optional<User> userCandidate =  udi.find(id);
         if (userCandidate.isPresent()) {
             User user = userCandidate.get();
-            root.put("name", user.getUsername());
-            root.put("birth", user.getBirthdate());
-            root.put("email", user.getMail());
+            root.put("user", user);
         }
     }
 
