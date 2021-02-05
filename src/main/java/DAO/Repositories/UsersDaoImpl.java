@@ -33,7 +33,9 @@ public class UsersDaoImpl implements UsersDao {
             ResultSet set = preparedStatement.executeQuery();
 
             if (set.next()) {
-                return Optional.ofNullable(userRowMapper.mapRow(set));
+                User user = userRowMapper.mapRow(set);
+                user.setId(set.getLong(1));
+                return Optional.ofNullable(user);
             } else {
                 throw new SQLException();
             }
@@ -53,13 +55,7 @@ public class UsersDaoImpl implements UsersDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                User user = new User(
-                        resultSet.getString("name"),
-                        resultSet.getString("password"),
-                        resultSet.getString("email"),
-                        resultSet.getDate("birthdate")
-                );
-
+                User user = userRowMapper.mapRow(resultSet);
                 user.setId(resultSet.getLong(1));
                 return Optional.ofNullable(user);
             } else {
@@ -146,6 +142,7 @@ public class UsersDaoImpl implements UsersDao {
             ResultSet set = preparedStatement.executeQuery();
             while (set.next()) {
                 User user = userRowMapper.mapRow(set);
+                user.setId(set.getLong(1));
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -165,6 +162,7 @@ public class UsersDaoImpl implements UsersDao {
             ResultSet set = preparedStatement.executeQuery();
             while (set.next()) {
                 User user = userRowMapper.mapRow(set);
+                user.setId(set.getLong(1));
                 users.add(user);
             }
         } catch (SQLException e) {

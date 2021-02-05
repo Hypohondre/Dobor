@@ -5,10 +5,7 @@ import DAO.Interfaces.RowMapper;
 import models.Post;
 import services.ConnectionService;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -70,7 +67,7 @@ public class PostDaoImpl implements PostDao {
 
     @Override
     public void save(Post model) {
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SAVE)) {
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SAVE, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, model.getText());
             preparedStatement.setString(2, model.getName());
             preparedStatement.setString(3, model.getImg());
@@ -78,13 +75,13 @@ public class PostDaoImpl implements PostDao {
             preparedStatement.setLong(5, model.getCategory_id());
 
             if (preparedStatement.executeUpdate() == 0) {
-                throw new SQLException();
+                throw new SQLException("zdes");
             }
             try(ResultSet set = preparedStatement.getGeneratedKeys()) {
                 if (set.next()) {
                     model.setId(set.getLong(1));
                 } else {
-                    throw new SQLException();
+                    throw new SQLException("tut");
                 }
                 set.close();
                 preparedStatement.close();

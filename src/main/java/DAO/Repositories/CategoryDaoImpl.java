@@ -6,10 +6,7 @@ import models.Category;
 import models.Post;
 import services.ConnectionService;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +32,9 @@ public class CategoryDaoImpl implements CategoryDao {
             ResultSet set = preparedStatement.executeQuery();
 
             if (set.next()) {
-                return Optional.ofNullable(categoryRowMapper.mapRow(set));
+                Category category = categoryRowMapper.mapRow(set);
+                category.setId(set.getLong(1));
+                return Optional.ofNullable(category);
             } else {
                 throw new SQLException();
             }
@@ -49,7 +48,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public void save(Category model) {
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SAVE)) {
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SAVE, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, model.getName());
 
             if (preparedStatement.executeUpdate() == 0) {
@@ -114,6 +113,7 @@ public class CategoryDaoImpl implements CategoryDao {
             ResultSet set = preparedStatement.executeQuery();
             while (set.next()) {
                 Category category = categoryRowMapper.mapRow(set);
+                category.setId(set.getLong(1));
                 categories.add(category);
             }
 
@@ -131,7 +131,7 @@ public class CategoryDaoImpl implements CategoryDao {
             ResultSet set = preparedStatement.executeQuery();
 
             if (set.next()) {
-                Category category = new Category(set.getString("name"));
+                Category category = categoryRowMapper.mapRow(set);
                 category.setId(set.getLong(1));
                 return Optional.ofNullable(category);
             } else {
@@ -153,6 +153,7 @@ public class CategoryDaoImpl implements CategoryDao {
             ResultSet set = preparedStatement.executeQuery();
             while (set.next()) {
                 Category category = categoryRowMapper.mapRow(set);
+                category.setId(set.getLong(1));
                 categories.add(category);
             }
         } catch (SQLException e) {
